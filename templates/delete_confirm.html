@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% block title %}Delete Post | MyBlog{% endblock %}
+
+{% block content %}
+
+<style>
+    .delete-wrapper {
+        background: var(--card-bg);
+        border: 1px solid #fecaca;
+        border-radius: 12px;
+        padding: 2rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .delete-wrapper h1 {
+        font-size: 1.5rem;
+        color: #dc2626;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .delete-warning {
+        background: #fef2f2;
+        color: #b91c1c;
+        padding: 0.7rem 1rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        margin: 1rem 0 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .delete-wrapper .post-preview p {
+        margin-bottom: 0.6rem;
+        color: var(--muted);
+        font-size: 0.9rem;
+    }
+
+    .form-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .btn-danger {
+        background: #dc2626;
+        color: #fff;
+        border: none;
+        padding: 0.6rem 1.4rem;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        cursor: pointer;
+    }
+
+    .btn-danger:hover { opacity: 0.85; }
+
+    .form-actions a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+</style>
+
+<div class="delete-wrapper">
+    <h1><i class="fa-solid fa-triangle-exclamation"></i> Delete Post</h1>
+
+    <div class="delete-warning">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        This action cannot be undone. Are you sure you want to delete this post?
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-actions">
+            <button type="submit" class="btn-danger"><i class="fa-solid fa-trash"></i> Yes, Delete</button>
+            <a href="{% url 'home' %}">Cancel</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

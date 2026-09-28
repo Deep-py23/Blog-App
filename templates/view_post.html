@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %}{{ post.title }} | MyBlog{% endblock %}
+
+{% block content %}
+
+<style>
+    .post-detail {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 2rem;
+    }
+
+    .post-detail h1 {
+        font-size: 1.8rem;
+        margin-bottom: 0.6rem;
+    }
+
+    .post-detail .post-meta {
+        font-size: 0.85rem;
+        color: var(--muted);
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 1rem;
+    }
+
+    .post-detail .post-meta span { margin-right: 1.2rem; }
+
+    .post-detail .post-body {
+        line-height: 1.8;
+        color: var(--text);
+        white-space: pre-line;
+    }
+
+    .post-detail-actions {
+        display: flex;
+        gap: 1.2rem;
+        margin-top: 2rem;
+        padding-top: 1.2rem;
+        border-top: 1px solid var(--border);
+    }
+
+    .post-detail-actions a {
+        text-decoration: none;
+        font-size: 0.9rem;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    .post-detail-actions a:hover { color: var(--primary); }
+
+    .post-detail-actions .delete-link:hover { color: #dc2626; }
+
+    .back-link {
+        display: inline-block;
+        margin-bottom: 1rem;
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+
+    .back-link:hover { color: var(--primary); }
+</style>
+
+<a href="{% url 'home' %}" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+
+<div class="post-detail">
+    <h1>{{ post.title }}</h1>
+    <div class="post-meta">
+        <span><i class="fa-solid fa-tag"></i> {{ post.category }}</span>
+        <span><i class="fa-regular fa-calendar"></i> {{ post.created_at }}</span>
+        <span><i class="fa-solid fa-pen-nib"></i> Updated {{ post.updated_at }}</span>
+    </div>
+    <div class="post-body">
+        {{ post.content }}
+    </div>
+
+    <div class="post-detail-actions">
+        <a href="{% url 'update_post' pk=post.pk %}"><i class="fa-solid fa-pen"></i> Edit</a>
+        <a href="{% url 'delete_post' pk=post.pk %}" class="delete-link"><i class="fa-solid fa-trash"></i> Delete</a>
+    </div>
+</div>
+
+{% endblock %}

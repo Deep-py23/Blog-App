@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}My Blog{% endblock %}</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+    :root {
+        --primary: #4f46e5;
+        --bg: #f8f9fc;
+        --card-bg: #ffffff;
+        --text: #1f2937;
+        --muted: #6b7280;
+        --border: #e5e7eb;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+    }
+
+    nav {
+        background: var(--card-bg);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    nav a {
+        text-decoration: none;
+        color: var(--text);
+        font-weight: 600;
+    }
+
+    nav .brand {
+        font-size: 1.3rem;
+        color: var(--primary);
+    }
+
+    nav .brand i { margin-right: 0.4rem; }
+
+    .btn {
+        background: var(--primary);
+        color: #fff !important;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        transition: opacity 0.2s;
+    }
+
+    .btn:hover { opacity: 0.85; }
+
+    main {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    footer {
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.85rem;
+        padding: 2rem 0;
+    }
+</style>
+</head>
+<body>
+
+<nav>
+    <a href="{% url 'home' %}" class="brand"><i class="fa-solid fa-feather-pointed"></i>MyBlog</a>
+    <a href="{% url 'add_post' %}" class="btn"><i class="fa-solid fa-plus"></i> New Post</a>
+</nav>
+
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+
+<footer>
+    &copy; {% now "Y" %} MyBlog. Built with Django.
+</footer>
+
+</body>
+</html>

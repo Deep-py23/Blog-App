@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block title %}{% if form.instance.pk %}Edit Post{% else %}New Post{% endif %} | MyBlog{% endblock %}
+
+{% block content %}
+
+<style>
+    .form-wrapper {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 2rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .form-wrapper h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.3rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .form-wrapper .subtitle {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-wrapper p { margin-bottom: 1.1rem; }
+
+    .form-wrapper label {
+        display: block;
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .form-wrapper input,
+    .form-wrapper textarea,
+    .form-wrapper select {
+        width: 100%;
+        padding: 0.6rem 0.8rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-family: inherit;
+    }
+
+    .form-wrapper input:focus,
+    .form-wrapper textarea:focus,
+    .form-wrapper select:focus {
+        outline: none;
+        border-color: var(--primary);
+    }
+
+    .form-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1.5rem;
+    }
+
+    .form-actions button {
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        padding: 0.6rem 1.4rem;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        cursor: pointer;
+    }
+
+    .form-actions button:hover { opacity: 0.85; }
+
+    .form-actions a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+</style>
+
+<div class="form-wrapper">
+    <h1>
+        {% if form.instance.pk %}
+            <i class="fa-solid fa-pen"></i> Edit Post
+        {% else %}
+            <i class="fa-solid fa-circle-plus"></i> Create New Post
+        {% endif %}
+    </h1>
+    <p class="subtitle">
+        {% if form.instance.pk %}
+            Update the details below and save your changes.
+        {% else %}
+            Fill in the details to publish a new post.
+        {% endif %}
+    </p>
+
+    <form method="POST" action="{% if form.instance.pk %}{% url 'update_post' pk=form.instance.pk %}{% else %}{% url 'add_post' %}{% endif %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-actions">
+            <button type="submit"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+            <a href="{% url 'home' %}">Cancel</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
