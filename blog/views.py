@@ -1,12 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Post
 from . forms import PostForm
+from django.views.generic import DetailView
 
-def view_post(request, pk):
-    post = get_object_or_404(Post, pk=pk)
-
-    return render(request, 'view_post.html', {'post':post})
-
+class ViewPost(DetailView):
+    model = Post
+    template_name = 'view_post.html'
+    context_object_name = 'post'
 
 
 def add_post(request):
