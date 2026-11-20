@@ -4,11 +4,6 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 
 
-
-def home(request):
-    return render(request, 'blog/home.html')
-
-
 def register_view(request):
     if request.method=='POST':
         form = Register_User(request.POST)
