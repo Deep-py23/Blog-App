@@ -78,9 +78,10 @@
     </div>
 
  <div class="post-detail-actions">
-        <a href="{% url 'update_post' pk=post.pk %}"><i class="fa-solid fa-pen"></i> Edit</a>
-        <a href="{% url 'delete_post' pk=post.pk %}" class="delete-link"><i class="fa-solid fa-trash"></i> Delete</a>
-    </div>  
+        {% if user == post.author %}
+    <a href="{% url 'update_post' pk=post.pk %}"><i class="fa-solid fa-pen"></i>Edit</a>
+    <a href="{% url 'delete_post' pk=post.pk %}" class="danger"><i class="fa-solid fa-trash"></i>Delete</a>
+        {% endif %}
 </div>
 
 {% endblock %}

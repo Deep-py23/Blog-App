@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from . models import Post
 from . forms import PostForm
-
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied 
 
 def home(request):
     posts = Post.objects.all()
@@ -13,6 +14,8 @@ def view_post(request, pk):
     return render (request, 'blog/post_detail.html', {'post':post})
 
 
+
+@login_required(login_url='login', redirect_field_name='')
 def add_post(request):
     if request.method=='POST':
         form = PostForm(request.POST)
@@ -25,25 +28,44 @@ def add_post(request):
 
 
 
+@login_required
+def add_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            form.save_m2m()
+            return redirect('home')
+    else:
+        form = PostForm()
+    return render(request, 'blog/add_update.html', {'form': form})
+
+
+
+@login_required
 def update_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    if post.author != request.user:
+        raise PermissionDenied
     if request.method == 'POST':
-        form = PostForm(request.POST, instance=post)
+        form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
             return redirect('home')
     else:
-        form = PostForm(instance=post)    
-    return render (request, 'blog/add_update.html', {'form':form})
-    
-     
+        form = PostForm(instance=post)
+    return render(request, 'blog/add_update.html', {'form': form})
 
+
+@login_required
 def delete_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
+    if post.author != request.user:
+        raise PermissionDenied
     if request.method == 'POST':
         post.delete()
         return redirect('home')
-    return render(request, 'blog/post_delete.html', {'post':post})
-
-
+    return render(request, 'blog/post_delete.html', {'post': post})
     

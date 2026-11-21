@@ -198,8 +198,10 @@
         <p class="post-content">{{ post.content|truncatewords:25 }}</p>
         <div class="post-actions">
             <a href="{% url 'view_post' pk=post.pk %}"><i class="fa-solid fa-eye"></i>View</a>
+            {% if user == post.author %}
             <a href="{% url 'update_post' pk=post.pk %}"><i class="fa-solid fa-pen"></i>Edit</a>
             <a href="{% url 'delete_post' pk=post.pk %}" class="danger"><i class="fa-solid fa-trash"></i>Delete</a>
+            {% endif %}
         </div>
     </article>
     {% empty %}
