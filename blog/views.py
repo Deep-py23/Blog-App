@@ -14,20 +14,6 @@ def view_post(request, pk):
     return render (request, 'blog/post_detail.html', {'post':post})
 
 
-
-@login_required(login_url='login', redirect_field_name='')
-def add_post(request):
-    if request.method=='POST':
-        form = PostForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-    else:
-        form = PostForm()
-    return render (request, 'blog/add_update.html', {'form':form})
-
-
-
 @login_required
 def add_post(request):
     if request.method == 'POST':
