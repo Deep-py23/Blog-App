@@ -12,14 +12,15 @@ Optional image upload for each post
 Home page with the latest posts, showing category, tags and date
 Customised Django admin with list columns, filters and search
 Custom CSS with Bootstrap and Font Awesome icons
-Tech stack
 
-Python 3, Django
-PostgreSQL
-Pillow (image uploads)
-python-decouple (settings and secrets kept in a .env file)
-HTML, CSS, Bootstrap, Font Awesome
-Database models
+Tech stack:
+
+Python 3, Django, 
+PostgreSQL,
+Pillow (image uploads),
+python-decouple (settings and secrets kept in a .env file),
+HTML, CSS, Bootstrap, Font Awesome,
+Database models.
 
 Category: name
 Tag: name
